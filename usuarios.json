@@ -1,0 +1,9 @@
+[{
+    "estado": true,
+    "correo": "mate@mail.com",
+    "contrasena": "123",
+    "favoritos": [],
+    "id": 1,
+    "nombre": "mateo maldini",
+    "rol": "BASE"
+}]

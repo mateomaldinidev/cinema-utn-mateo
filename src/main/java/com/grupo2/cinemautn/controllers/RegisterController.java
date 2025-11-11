@@ -1,5 +1,9 @@
 package com.grupo2.cinemautn.controllers;
 
+import com.grupo2.cinemautn.models.usuarios.Rol;
+import com.grupo2.cinemautn.models.usuarios.Usuario;
+import com.grupo2.cinemautn.service.ServiceLocator;
+import com.grupo2.cinemautn.service.UsuarioService;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -23,6 +27,8 @@ public class RegisterController {
     @FXML private Button btnCancelar;
     @FXML private Button btnBack;
     @FXML private Label statusLabel;
+
+    private static final UsuarioService usuarioService = ServiceLocator.usuarioService;
 
     @FXML
     private void initialize() {
@@ -75,8 +81,15 @@ public class RegisterController {
             return;
         }
 
-        // Aquí iría la lógica de persistencia real (mock por ahora)
-        System.out.println("[MOCK] Creando usuario: " + nombre + " <" + correo + ">");
+        // Verificar si existe usuario con mismo correo
+        if (usuarioService.buscarPorCorreo(correo) != null) {
+            statusLabel.setText("Ya existe un usuario con ese correo.");
+            return;
+        }
+
+        // Crear y persistir usuario
+        Usuario nuevo = new Usuario(nombre, correo, pass, Rol.BASE);
+        usuarioService.crear(nuevo);
 
         // Navegar al login después del registro
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/grupo2/cinemautn/fxml/login.fxml"));
@@ -87,4 +100,3 @@ public class RegisterController {
         stage.show();
     }
 }
-

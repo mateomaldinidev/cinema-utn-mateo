@@ -91,6 +91,7 @@ public class GestoraUsuariosJSON {
             // favoritos: lista de ids (deserializamos como vacío; necesitará resolución externa a objetos Contenido)
             if (jsonObject.has("favoritos")) {
                 // dejamos la lista vacía; la resolución a objetos Contenido puede hacerse desde UsuarioService si se dispone de ContenidoService
+                // (aquí sólo preservamos los ids en el JSON; no resolvemos objetos para no acoplar gestora a ContenidoService)
             }
 
         } catch (JSONException e) {
