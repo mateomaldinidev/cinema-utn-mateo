@@ -9,9 +9,9 @@ import javafx.scene.control.Hyperlink;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import javafx.event.ActionEvent;
 
 import java.io.IOException;
-import java.util.EventObject;
 
 public class LoginController {
     @FXML private TextField emailField;
@@ -33,6 +33,17 @@ public class LoginController {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(mainScene);
         stage.setTitle("Principal");
+        stage.show();
+    }
+
+    @FXML
+    public void onRegister(ActionEvent event) throws IOException {
+        // Abrir pantalla de registro
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/grupo2/cinemautn/fxml/register.fxml"));
+        Scene scene = new Scene(loader.load());
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(scene);
+        stage.setTitle("Registro - Cinema UTN");
         stage.show();
     }
 

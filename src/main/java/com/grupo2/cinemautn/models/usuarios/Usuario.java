@@ -1,7 +1,10 @@
 package com.grupo2.cinemautn.models.usuarios;
 
 import com.grupo2.cinemautn.models.contenido.Contenido;
+import com.grupo2.cinemautn.models.contenido.Calificacion;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Usuario {
@@ -34,7 +37,11 @@ public class Usuario {
         listaFavoritos = new ListaFavoritos();
     }
 
-    //getters y settersp
+    //getters y setters
+
+    public int getIdUsuario() {
+        return idUsuario;
+    }
 
     public String getNombre() {
         return nombre;
@@ -76,6 +83,19 @@ public class Usuario {
         this.rol = rol;
     }
 
+    public ListaFavoritos getListaFavoritos() {
+        return listaFavoritos;
+    }
+
+    public void setListaFavoritos(ListaFavoritos listaFavoritos) {
+        this.listaFavoritos = listaFavoritos;
+    }
+
+    public void setIdUsuario(int id) {
+        this.idUsuario = id;
+        if (id > contador) contador = id;
+    }
+
     //otros métodos
 
     @Override
@@ -104,17 +124,30 @@ public class Usuario {
     }
 
     public void agregarAFavoritos(Contenido contenido) {
+        if (contenido == null) return;
+        if (this.listaFavoritos == null) this.listaFavoritos = new ListaFavoritos();
         this.listaFavoritos.agregarFavorito(contenido);
     }
 
     public void eliminarDeFavoritos(Contenido contenido) {
+        if (contenido == null || this.listaFavoritos == null) return;
         this.listaFavoritos.eliminarFavorito(contenido);
     }
 
-    public void verFavoritos() {
-        System.out.println(this.listaFavoritos.getFavoritos());
+    public List<Contenido> verFavoritos() {
+        if (this.listaFavoritos == null) return new ArrayList<>();
+        return new ArrayList<>(this.listaFavoritos.getFavoritos());
     }
 
-    public void calificarContenido(String titulo, int calificacion) {
+    public String verContenido(Contenido contenido) {
+        if (contenido == null) return "Contenido no disponible";
+        return contenido.toString();
+    }
+
+    public void calificar(Contenido contenido, double estrellas) {
+        if (contenido == null) return;
+        // Crear una calificación temporal con ids por defecto (0)
+        Calificacion c = new Calificacion(0, this.idUsuario, contenido.getId(), estrellas, true);
+        contenido.agregarCalificacion(c);
     }
 }
